@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
 function App() {
-  const [count, setCount] = useState(0)
-
+  const maxR = 9 * 35 - 20;
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <svg
+        version="1.1"
+        width="100%"
+        height="600"
+        viewBox="0 0 600 600"
+        preserveAspectRatio="xMinYMin meet"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {[...Array(10).keys()].map((i) => {
+          console.log(i * 35 - 20);
+          return (
+            <circle
+              cx="300"
+              cy="300"
+              r={i * 35 - 20}
+              stroke="#935350"
+              strokeWidth="2"
+              fill="none"
+              key={i}
+            />
+          );
+        })}
+        <line
+          x1="300"
+          y1={300 - maxR}
+          x2="300"
+          y2={300 + maxR}
+          stroke="#935350"
+        />
+        <line
+          x1={300 - maxR}
+          y1="300"
+          x2={300 + maxR}
+          y2="300"
+          stroke="#935350"
+        />
+        <line
+          x1={300 - Math.cos(toRadians(45)) * maxR}
+          y1={300 - Math.sin(toRadians(45)) * maxR}
+          x2={300 + Math.sin(toRadians(90 + 45)) * maxR}
+          y2={300 + Math.sin(toRadians(90 + 45)) * maxR}
+          stroke="#935350"
+        />
+        <line
+          x1={300 - Math.cos(toRadians(45)) * maxR}
+          y1={300 + Math.sin(toRadians(45)) * maxR}
+          x2={300 + Math.sin(toRadians(90 + 45)) * maxR}
+          y2={300 - Math.sin(toRadians(90 + 45)) * maxR}
+          stroke="#935350"
+        />
+      </svg>
     </>
-  )
+  );
 }
 
-export default App
+// <line x1="600" y1="0" x2="0" y2="600" stroke="#935350" />
+function toRadians(angle: number) {
+  return angle * (Math.PI / 180);
+}
+
+export default App;
