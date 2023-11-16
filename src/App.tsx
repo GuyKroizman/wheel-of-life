@@ -1,5 +1,19 @@
-function App() {
-  const maxR = 9 * 35 - 20;
+import { useState } from "react";
+
+const CircleStrokeColor = "#A35350";
+const Center = 300;
+const RingWidth = 35;
+const maxR = 9 * RingWidth - 20;
+
+type Coord = { x: number; y: number };
+
+export default function App() {
+  const [coords, setCoords] = useState<Coord[]>([]);
+
+  function onclick(e: React.MouseEvent<SVGSVGElement, MouseEvent>) {
+    setCoords([...coords, { x: e.clientX, y: e.clientY }]);
+  }
+
   return (
     <>
       <svg
@@ -9,15 +23,26 @@ function App() {
         viewBox="0 0 600 600"
         preserveAspectRatio="xMinYMin meet"
         xmlns="http://www.w3.org/2000/svg"
+        onClick={onclick}
       >
-        {[...Array(10).keys()].map((i) => {
-          console.log(i * 35 - 20);
+        {coords.map((coord, i) => {
           return (
             <circle
-              cx="300"
-              cy="300"
-              r={i * 35 - 20}
-              stroke="#935350"
+              cx={coord.x}
+              cy={coord.y - 205}
+              r="7"
+              stroke="yellow"
+              key={i}
+            />
+          );
+        })}
+        {[...Array(10).keys()].map((i) => {
+          return (
+            <circle
+              cx={Center}
+              cy={Center}
+              r={i * RingWidth - 20}
+              stroke={CircleStrokeColor}
               strokeWidth="2"
               fill="none"
               key={i}
@@ -25,41 +50,38 @@ function App() {
           );
         })}
         <line
-          x1="300"
-          y1={300 - maxR}
-          x2="300"
-          y2={300 + maxR}
-          stroke="#935350"
+          x1={Center}
+          y1={Center - maxR}
+          x2={Center}
+          y2={Center + maxR}
+          stroke={CircleStrokeColor}
         />
         <line
-          x1={300 - maxR}
-          y1="300"
-          x2={300 + maxR}
-          y2="300"
-          stroke="#935350"
+          x1={Center - maxR}
+          y1={Center}
+          x2={Center + maxR}
+          y2={Center}
+          stroke={CircleStrokeColor}
         />
         <line
-          x1={300 - Math.cos(toRadians(45)) * maxR}
-          y1={300 - Math.sin(toRadians(45)) * maxR}
-          x2={300 + Math.sin(toRadians(90 + 45)) * maxR}
-          y2={300 + Math.sin(toRadians(90 + 45)) * maxR}
-          stroke="#935350"
+          x1={Center - Math.cos(toRadians(45)) * maxR}
+          y1={Center - Math.sin(toRadians(45)) * maxR}
+          x2={Center + Math.sin(toRadians(90 + 45)) * maxR}
+          y2={Center + Math.sin(toRadians(90 + 45)) * maxR}
+          stroke={CircleStrokeColor}
         />
         <line
-          x1={300 - Math.cos(toRadians(45)) * maxR}
-          y1={300 + Math.sin(toRadians(45)) * maxR}
-          x2={300 + Math.sin(toRadians(90 + 45)) * maxR}
-          y2={300 - Math.sin(toRadians(90 + 45)) * maxR}
-          stroke="#935350"
+          x1={Center - Math.cos(toRadians(45)) * maxR}
+          y1={Center + Math.sin(toRadians(45)) * maxR}
+          x2={Center + Math.sin(toRadians(90 + 45)) * maxR}
+          y2={Center - Math.sin(toRadians(90 + 45)) * maxR}
+          stroke={CircleStrokeColor}
         />
       </svg>
     </>
   );
 }
 
-// <line x1="600" y1="0" x2="0" y2="600" stroke="#935350" />
 function toRadians(angle: number) {
   return angle * (Math.PI / 180);
 }
-
-export default App;
