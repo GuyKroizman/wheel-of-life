@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Wheel } from "./Wheel";
 
 const CircleStrokeColor = "#A35350";
 const Center = 300;
@@ -16,6 +17,7 @@ export default function App() {
 
   return (
     <>
+      <Wheel></Wheel>
       <svg
         version="1.1"
         width="100%"
